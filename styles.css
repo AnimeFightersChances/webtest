@@ -2,7 +2,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background-color: #f0f0f0;
 }
 
 .quiz-container {
@@ -22,10 +22,12 @@ h1 {
 
 .btn-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .btn {
+    margin: 5px;
     padding: 10px 20px;
     font-size: 16px;
     background-color: #007bff;
