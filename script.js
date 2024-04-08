@@ -1,61 +1,47 @@
 const questions = [
-    "What is your favorite color?",
-    "What is your favorite animal?",
-    "What is your favorite season?"
+    "I enjoy social gatherings and meeting new people.",
+    "I prefer to carefully plan out my activities rather than being spontaneous.",
+    "I am often the life of the party and enjoy being the center of attention."
 ];
 
+let currentQuestion = 0;
 const answers = [];
 
-function createQuiz() {
-    const quiz = document.getElementById('quiz');
-    questions.forEach((question, index) => {
-        const questionContainer = document.createElement('div');
-        questionContainer.classList.add('question-container');
-        questionContainer.innerHTML = `
-            <div class="question">${question}</div>
-            <div class="answer-buttons btn-container">
-                <button class="btn" onclick="selectAnswer(${index}, 0)">Option 1</button>
-                <button class="btn" onclick="selectAnswer(${index}, 1)">Option 2</button>
-                <button class="btn" onclick="selectAnswer(${index}, 2)">Option 3</button>
-            </div>
-        `;
-        quiz.appendChild(questionContainer);
-    });
+function showQuestion() {
+    const questionContainer = document.getElementById('question-container');
+    questionContainer.innerHTML = `
+        <div id="question">${questions[currentQuestion]}</div>
+        <div id="answer-buttons" class="btn-container">
+            <button class="btn" onclick="selectAnswer('Disagree Strongly')">Disagree Strongly</button>
+            <button class="btn" onclick="selectAnswer('Disagree Slightly')">Disagree Slightly</button>
+            <button class="btn" onclick="selectAnswer('Agree Slightly')">Agree Slightly</button>
+            <button class="btn" onclick="selectAnswer('Agree Strongly')">Agree Strongly</button>
+        </div>
+    `;
 }
 
-function selectAnswer(questionIndex, answerIndex) {
-    const selectedButtons = document.querySelectorAll('.question-container')[questionIndex].querySelectorAll('.btn');
-    selectedButtons.forEach(button => {
-        button.classList.remove('selected');
-    });
-    selectedButtons[answerIndex].classList.add('selected');
+function selectAnswer(answer) {
+    answers[currentQuestion] = answer;
+    document.getElementById('next-button').classList.remove('hidden');
+}
 
-    answers[questionIndex] = answerIndex;
+function nextQuestion() {
+    currentQuestion++;
 
-    const submitButton = document.getElementById('submit-button');
-    submitButton.classList.remove('hidden');
+    if (currentQuestion < questions.length) {
+        showQuestion();
+        document.getElementById('next-button').classList.add('hidden');
+    } else {
+        showResult();
+        document.getElementById('next-button').classList.add('hidden');
+    }
 }
 
 function showResult() {
-    if (answers.length !== questions.length) {
-        alert('Please answer all questions.');
-        return;
-    }
-
-    const total = answers.reduce((acc, curr) => acc + curr, 0);
-    let result = '';
-
-    if (total <= 3) {
-        result = 'You are a calm and collected person.';
-    } else if (total <= 6) {
-        result = 'You are outgoing and adventurous.';
-    } else {
-        result = 'You are a thoughtful and observant individual.';
-    }
-
+    // Process and display results here
     const resultContainer = document.getElementById('result');
-    resultContainer.innerText = result;
+    resultContainer.innerText = "Quiz completed. Thank you!";
     resultContainer.classList.remove('hidden');
 }
 
-createQuiz();
+showQuestion();
